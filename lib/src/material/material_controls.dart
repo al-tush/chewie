@@ -161,15 +161,6 @@ class _MaterialControlsState extends State<MaterialControls>
 
   Widget _buildOptionsButton() {
     final options = <OptionItem>[
-      OptionItem(
-        onTap: () async {
-          Navigator.pop(context);
-          _onSpeedButtonTap();
-        },
-        iconData: Icons.speed,
-        title: chewieController.optionsTranslation?.playbackSpeedButtonText ??
-            'Playback speed',
-      )
     ];
 
     if (chewieController.additionalOptions != null &&
@@ -277,6 +268,8 @@ class _MaterialControlsState extends State<MaterialControls>
                     if (chewieController.allowMuting)
                       _buildMuteButton(controller),
                     const Spacer(),
+                    _buildPlaybackSpeedButton(),
+                    const SizedBox(width: 10),
                     if (chewieController.allowFullScreen) _buildExpandButton(),
                   ],
                 ),
@@ -330,6 +323,17 @@ class _MaterialControlsState extends State<MaterialControls>
               color: Colors.white,
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlaybackSpeedButton() {
+    return GestureDetector(
+      onTap: _onSpeedButtonTap,
+      child: Text('${controller.value.playbackSpeed}x',
+        style: TextStyle(
+          color: Colors.white,
         ),
       ),
     );
