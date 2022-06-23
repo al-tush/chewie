@@ -5,12 +5,34 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-class PlayerWithControls extends StatelessWidget {
+class PlayerWithControls extends StatefulWidget {
   const PlayerWithControls({Key? key}) : super(key: key);
+
+  State<PlayerWithControls> createState() => _PlayerWithControlsState();
+}
+
+class _PlayerWithControlsState extends State<PlayerWithControls> {
+  @override
+  void initState() {
+    super.initState();
+    final provider = context.getElementForInheritedWidgetOfExactType<ChewieControllerProvider>()!.widget as ChewieControllerProvider;
+    provider.controller.addListener(_chewieControllerListener);
+  }
+
+  @override
+  void dispose() {
+    final provider = context.getElementForInheritedWidgetOfExactType<ChewieControllerProvider>()?.widget as ChewieControllerProvider?;
+    provider?.controller.removeListener(_chewieControllerListener);
+    super.dispose();
+  }
+
+  void _chewieControllerListener() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ChewieController chewieController = ChewieController.of(context);
+    final chewieController = ChewieController.of(context);
 
     double _calculateAspectRatio(BuildContext context) {
       final size = MediaQuery.of(context).size;
