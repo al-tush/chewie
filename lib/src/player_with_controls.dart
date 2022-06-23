@@ -16,18 +16,9 @@ class _PlayerWithControlsState extends State<PlayerWithControls> {
   void initState() {
     super.initState();
     final provider = context.getElementForInheritedWidgetOfExactType<ChewieControllerProvider>()!.widget as ChewieControllerProvider;
-    provider.controller.addListener(_chewieControllerListener);
-  }
-
-  @override
-  void dispose() {
-    final provider = context.getElementForInheritedWidgetOfExactType<ChewieControllerProvider>()?.widget as ChewieControllerProvider?;
-    provider?.controller.removeListener(_chewieControllerListener);
-    super.dispose();
-  }
-
-  void _chewieControllerListener() {
-    setState(() {});
+    provider.controller.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
